@@ -1,0 +1,58 @@
+.box{
+	
+	background-color:red;
+	border:3px;
+	
+	
+}
+
+.firstDiv{
+	position:relative;
+	height:750px;
+	background-color:pink;
+}
+
+.secondDiv{
+	position:relative;
+	height:750px;
+	background-color:blue;
+}
+
+.small1Div{
+	height:350px;
+	background-color:orange;
+	
+}
+
+.small2Div{
+	height:350px;
+	background-color:blue;
+	
+}
+
+.outerdiv{
+	height:400px;
+	background-color:white;
+}
+
+#graph{
+	height:350px;
+	background-color:white;
+}
+
+
+#left{
+    float: left;
+    margin:2% 2% 2%;
+}
+#right{
+   float: right;
+}
+
+#buttonLeft{
+	float: left;
+	margin:2% 10% 2%;
+}
+
+
+
