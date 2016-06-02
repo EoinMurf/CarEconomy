@@ -8,13 +8,13 @@
 
 .firstDiv{
 	position:relative;
-	height:750px;
+	height:100%;
 	background-color:pink;
 }
 
 .secondDiv{
 	position:relative;
-	height:750px;
+	height:100%;
 	background-color:blue;
 }
 
@@ -31,13 +31,15 @@
 }
 
 .outerdiv{
-	height:400px;
+	height:40%;
+	width:100%;
 	background-color:white;
 }
 
 #graph{
 	height:350px;
-	background-color:white;
+	width:446px;
+	background-color:orange;
 }
 
 
