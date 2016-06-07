@@ -14,28 +14,26 @@ class TwitterProxy {
 	 */
 	private $config = [
 		'use_whitelist' => true, // If you want to only allow some requests to use this script.
-		'base_url' => 'https://api.twitter.com/1.1/'
-	];
+		'base_url' => ''
+	];//https://api.twitter.com/1.1/
 	
 	/**
 	 * Only allow certain requests to twitter. Stop randoms using your server as a proxy.
 	 */
-	private $whitelist = [];
-
-	
-	 	@param	string	$oauth_access_token			3335584408-veD39gDZhClxMSzdnA8uCpmOjwYpQsWt2GaBoCQ	('Access token' on https://apps.twitter.com)
-	 	@param	string	$oauth_access_token_secret	YdmxyLMfL9yphLxVBMcZpzK8QMo79xOf1rG9Zz9OcWcJ7		('Access token secret' on https://apps.twitter.com)
-	 	@param	string	$consumer_key				WPjBiLOTrKrjfC2Bz7mARMdX3							('API key' on https://apps.twitter.com)
-	 	@param	string	$consumer_secret			fX87W6Lc2umsq3z2Z8kD6uKbPtMVR703pmwgaCLBIezUGrUgvW	('API secret' on https://apps.twitter.com)
-	 	@param	string	$user_id					3335584408 
-	 	@param	string	$screen_name				eoinmurphy1994
-	 	@param	string	$count						1
-	 
+/*	private $whitelist = [];
+	$oauth_access_token	= "3335584408-veD39gDZhClxMSzdnA8uCpmOjwYpQsWt2GaBoCQ";
+	$oauth_access_token_secret = "YdmxyLMfL9yphLxVBMcZpzK8QMo79xOf1rG9Zz9OcWcJ7";
+	$consumer_key =	"WPjBiLOTrKrjfC2Bz7mARMdX3";
+	$consumer_secret = "fX87W6Lc2umsq3z2Z8kD6uKbPtMVR703pmwgaCLBIezUGrUgvW";
+	$user_id = "3335584408";
+	$screen_name = "eoinmurphy1994";
+	$count = 1;
+	*/ 
 	public function __construct($oauth_access_token, $oauth_access_token_secret, $consumer_key, $consumer_secret, $user_id, $screen_name, $count = 1) {
 
 		$this->config = array_merge($this->config, compact('oauth_access_token', 'oauth_access_token_secret', 'consumer_key', 'consumer_secret', 'user_id', 'screen_name', 'count'));
 
-		$this->whitelist['statuses/user_timeline.json?user_id=' . $this->config['user_id'] . '&screen_name=' . $this->config['screen_name'] . '&count=' . $this->config['count']] = true;
+	//	$this->whitelist['statuses/user_timeline.json?user_id=' . $this->config['user_id'] . '&screen_name=' . $this->config['screen_name'] . '&count=' . $this->config['count']] = true;
 	}
 
 	private function buildBaseString($baseURI, $method, $params) {
@@ -64,30 +62,33 @@ class TwitterProxy {
 			die('No URL set');
 		}		
 		 
-		if ($this->config['use_whitelist'] && ! isset($this->whitelist[$url])){
+	/*	if ($this->config['use_whitelist'] && ! isset($this->whitelist[$url])){
 			die('URL is not authorised');
 		}
-		 
+	*/ 
 		// Figure out the URL parameters
 		$url_parts = parse_url($url);
 		parse_str($url_parts['query'], $url_arguments);
 		 
-		$full_url = $this->config['base_url'] . $url; // URL with the query on it
+		 
+		$full_url = $this->config['base_url'] . $url.".json"; // URL with the query on it
+		
+		echo "<br /><br />Full url : ".$full_url."<br /><br />";
 		$base_url = $this->config['base_url'] . $url_parts['path']; // URL without the query
 		 
 		// Set up the OAuth Authorization array
 		$oauth = [
-			'oauth_consumer_key' => $this->config['consumer_key'],
+			'oauth_consumer_key' => $this->config['$consumer_key'],
 			'oauth_nonce' => time(),
 			'oauth_signature_method' => 'HMAC-SHA1',
-			'oauth_token' => $this->config['oauth_access_token'],
+			'oauth_token' => $this->config['$oauth_access_token'],
 			'oauth_timestamp' => time(),
 			'oauth_version' => '1.0'
 		];
 
 		$base_info = $this->buildBaseString($base_url, 'GET', array_merge($oauth, $url_arguments));
 		
-		$composite_key = rawurlencode($this->config['consumer_secret']) . '&' . rawurlencode($this->config['oauth_access_token_secret']);
+		$composite_key = rawurlencode($this->config['$consumer_secret']) . '&' . rawurlencode($this->config['$oauth_access_token']);
 
 		$oauth['oauth_signature'] = base64_encode(hash_hmac('sha1', $base_info, $composite_key, true));
 		 
