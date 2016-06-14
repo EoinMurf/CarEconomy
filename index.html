@@ -36,7 +36,49 @@ ${demo.css}
 		</style>
 		
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script>
+var makeType;
+var transmissionType;
 
+	function processMake(elem){
+		alert("The make that was selected is : "+elem);
+		makeType = document.getElementById("make").value;		
+		document.getElementById("make").style.display = "none";
+		document.getElementById("tramsmission").style.display = "inline";
+	}
+	
+	
+	function processTransmission(type){
+		
+		/*
+			We are going to use the global variable for make and the local variable for transmissionType
+			and send an ajax request to get the available models from the database.
+			
+			with the results we need to build the options for the the next button. So for example if we
+			have an array of elements called models being returned from the server we can build the list like this:
+			
+			we are going to create the following structure for HTML and then insert it into the appropriate div below...
+			
+			Ajax Call ...
+			
+			
+			
+			
+			
+			var content = "<button type=\"button\" class=\"btn btn-danger\">Model</button><button type=\"button\" class=\"btn btn-danger dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button><ul class=\"dropdown-menu\">";
+			
+			for(var i=0;i < models.length;i++){
+				content = content + "<li><a onclick="processModel(\'"+models[i]+"\');">"+models[i]+"</a></li>";
+			}
+			content = content + "</ul>";
+			document.getElementById("model").innerHTML = content;
+			document.getElementById("model").style.display = "inline";
+			document.getElementById("transmission").style.display = "none";
+			
+		*/
+		
+	}
+</script>
 </head>
 
 <body>
@@ -66,135 +108,76 @@ ${demo.css}
 
     <!-- Page Content -->
 	
+	<!--
 	
+	<div class="secondDiv">
+		  This is content for the second div	  
+	</div> 
+	
+	-->
 	
 	<div class="container-fluid">
-	  <div class="row-fluid">
-			<div class="col-lg-9 firstDiv"> 
-		  <!--Sidebar content-->
-		  
-		<!--  <div id="graph" style="width: 300px; height: 200px; margin: 0 auto">
-		  </div>  -->
-		 
-			<div class="col-md-12 outerdiv">
-			<img src="pig.jpg" >
-			</div>	
-		  
-			<div class="col-md-6 small1Div">
-			 
-			<div class="container">
-			
-				<div class="btn-group" id="left">
+		<div class="row">
+			<div class="col-lg-10"> 	 
+				<img src="pig.jpg" class="img-responsive">
+			</div>
+		</div> <!-- This is the end of the Pig -->
+		<div class="row">
+			<div class="col-lg-5 text-center" style="background-color:white;">
+			<h1>SELECT OPTIONS</h1>
+			<hr>
+			<div id="make" class="btn-group text-center">
 					  <button type="button" class="btn btn-danger">Select Make</button>
 					  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<span class="caret"></span>
 						<span class="sr-only">Toggle Dropdown</span>
 					  </button>
 					<ul class="dropdown-menu">
-						<li><a href="#">Action</a></li>
+						<li><a onclick="processMake('BMW');">BMW</a></li>
 						<li><a href="#">Another action</a></li>
 						<li><a href="#">Something else here</a></li>
 						<li><a href="#">Separated link</a></li>
 					</ul>
 				</div>
-						
-				
-				<div class="btn-group" id="left">
-					  <button type="button" class="btn btn-danger">Fuel Type</button>
+			
+			<div class="btn-group text-center" id="tramsmission" style="display:none;">
+					  <button type="button" class="btn btn-danger">Transmission</button>
 					  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<span class="caret"></span>
 						<span class="sr-only">Toggle Dropdown</span>
 					  </button>
 					<ul class="dropdown-menu">
-						<li><a href="#">Action</a></li>
-						<li><a href="#">Another action</a></li>
-						<li><a href="#">Something else here</a></li>
-						<li><a href="#">Separated link</a></li>
+						<li><a href="#">Manual</a></li>
+						<li><a href="#">Automatic</a></li>						
 					</ul>
-				</div>
-								
-				
 			</div>
 			
-			<div class="container">
-				
-				<div class="btn-group" id="left">
-					  <button type="button" class="btn btn-danger">Select Model</button>
-					  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<span class="caret"></span>
-						<span class="sr-only">Toggle Dropdown</span>
-					  </button>
-					<ul class="dropdown-menu">
-						<li><a href="#">Action</a></li>
-						<li><a href="#">Another action</a></li>
-						<li><a href="#">Something else here</a></li>
-						<li><a href="#">Separated link</a></li>
-					</ul>
-				</div>
-				
-			<div class="input-group" id="left">
-				<input type="text" class="form-control" placeholder="Engine Size" aria-describedby="sizing-addon2">
+			<div class="btn-group" id="model" style="display:none;">				  
 			</div>
-	
-			</div>
-	
-			<div class="container">
-				
-				<div class="btn-group" id="left">
-					  <button type="button" class="btn btn-danger">Select Year</button>
-					  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<span class="caret"></span>
-						<span class="sr-only">Toggle Dropdown</span>
-					  </button>
-					<ul class="dropdown-menu">
-						<li><a href="#">Action</a></li>
-						<li><a href="#">Another action</a></li>
-						<li><a href="#">Something else here</a></li>
-						<li><a href="#">Separated link</a></li>
-					</ul>
-				</div>
-				
-			<div class="input-group" id="left">
-				<input type="text" class="form-control" placeholder="Aprox Kms" aria-describedby="sizing-addon2">
-			</div>
-	
-			</div>
-	
-			<div class="container">
-				
-				<div class="btn-group" id="left">
-					  <button type="button" class="btn btn-danger">Cancel</button>
-				</div>
-				
-				<div class="btn-group" id="buttonLeft">
-					<button type="button" class="btn btn-danger">Submit</button>
-				</div>
-	
-			</div>		
 			
-			</div>
-		  
-			<div class="col-md-6 ">
-				<div   id="graph">
+			
+			
+			
+			
+			
+			
+			
+			</div>			
+			<div class="col-lg-5" style="background-color:white;">
+			
+			<div   id="graph">
 				</div>
-
+			</div>					
+		</div> <!-- end of the content div -->
+		<div class="row">
+			<div class="col-lg-12" style="background-color:black;">		
+				<h4 style="color:white;">This is the footer</h4>
 			</div>
-
 		</div>
-	
-		<div class="col-md-3 secondDiv">
-		  <!--Body content-->
-		 	 
-	
-		  This is content for the second div
-	  
-	
-		  
-	  
-		</div>
-	  </div>
+			
+		
 	</div>
-
+	
     <!-- /.container -->
 
     <!-- jQuery Version 1.11.1 -->
