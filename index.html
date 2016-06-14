@@ -9,13 +9,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Bare - Start Bootstrap Template</title>
+    <title>Car Economy</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="./css/style.css" rel="stylesheet">
 
-
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+	
     <!-- Custom CSS -->
     <style>
     body {
@@ -36,6 +37,7 @@ ${demo.css}
 		</style>
 		
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	
 <script>
 var makeType;
 var transmissionType;
@@ -79,6 +81,7 @@ var transmissionType;
 		
 	}
 </script>
+
 </head>
 
 <body>
@@ -96,6 +99,8 @@ var transmissionType;
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="#">Car Economy</a>
+              
+				
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -108,25 +113,46 @@ var transmissionType;
 
     <!-- Page Content -->
 	
-	<!--
 	
-	<div class="secondDiv">
-		  This is content for the second div	  
-	</div> 
-	
-	-->
 	
 	<div class="container-fluid">
-		<div class="row">
-			<div class="col-lg-10"> 	 
-				<img src="pig.jpg" class="img-responsive">
-			</div>
-		</div> <!-- This is the end of the Pig -->
-		<div class="row">
-			<div class="col-lg-5 text-center" style="background-color:white;">
-			<h1>SELECT OPTIONS</h1>
-			<hr>
-			<div id="make" class="btn-group text-center">
+	  <div class="row-fluid">
+			<div class="col-lg-9 firstDiv"> 
+		  <!--Sidebar content-->
+		  
+		<!--  <div id="graph" style="width: 300px; height: 200px; margin: 0 auto">
+		  </div>  -->
+		 
+			<div class="col-md-12 outerdiv">
+				<div class="slideshow" style="max-width:900px">
+				  <img class="mySlides" src="pig.jpg" style="width:100%">
+				  <img class="mySlides" src="bmwnew.jpg" style="width:100%">
+				  <img class="mySlides" src="dubaipolice.jpg" style="width:100%">
+				</div>
+				<script>
+					var myIndex = 0;
+					carousel();
+
+					function carousel() {
+						var i;
+						var x = document.getElementsByClassName("mySlides");
+						for (i = 0; i < x.length; i++) {
+						   x[i].style.display = "none";  
+						}
+						myIndex++;
+						if (myIndex > x.length) {myIndex = 1}    
+						x[myIndex-1].style.display = "block";  
+						setTimeout(carousel, 2000); // Change image every 2 seconds
+					}
+				</script>
+				
+			</div>	
+		  
+			<div class="col-md-6 small1Div">
+			 
+			<div class="container leftmain">
+				<h2> Please enter the Car details				</h2>
+				<div id="make" class="btn-group text-center left" >
 					  <button type="button" class="btn btn-danger">Select Make</button>
 					  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<span class="caret"></span>
@@ -156,28 +182,47 @@ var transmissionType;
 			</div>
 			
 			
-			
-			
-			
-			
-			
-			
-			</div>			
-			<div class="col-lg-5" style="background-color:white;">
-			
-			<div   id="graph">
-				</div>
-			</div>					
-		</div> <!-- end of the content div -->
-		<div class="row">
-			<div class="col-lg-12" style="background-color:black;">		
-				<h4 style="color:white;">This is the footer</h4>
 			</div>
-		</div>
+		  
 			
+
+		</div>
 		
-	</div>
+		<div class="col-md-6 rightdiv">
+			<div class="col-md-6 ">
+				<div   id="graph">
+				</div>
+
+			</div>
+		
+		</div>
 	
+		<div class="col-md-12 secondDiv" >
+		  <!--Body content-->
+		 <div id="secondDiv" style="postion:relative; overflow:hidden; width:100%;background-color: black;">	 
+		<span id="scrolltext" style="position:absolute; background-color: black; color:white">Developed by Eoin, Tomas, Ebin, and Ryan.   Copyright protected. &copy 2016</span>
+		  </div>
+		      <script>
+				function scroll() {
+				  $('#scrolltext').css('left', $('#secondDiv').width());
+				  $('#scrolltext').animate({
+					left: '-='+($('#secondDiv').width()+$('#scrolltext').width())
+				  }, 12000, function() {
+					scroll();
+				  });
+				}
+
+			scroll();
+	</script>
+	  
+		
+	
+		  
+	  
+		</div>
+	  </div>
+	</div>
+
     <!-- /.container -->
 
     <!-- jQuery Version 1.11.1 -->

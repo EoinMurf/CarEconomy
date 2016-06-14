@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Car Economy</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="./css/style.css" rel="stylesheet">
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+	
+    <!-- Custom CSS -->
+    <style>
+    body {
+        padding-top: 70px;
+        /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    }
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+		<style type="text/css">
+${demo.css}
+		</style>
+		
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	
+	<script>
+			function scroll() {
+		  $('#scrolltext').css('left', $('#secondDiv').width());
+		  $('#scrolltext').animate({
+			left: '-='+($('#secondDiv').width()+$('#scrolltext').width())
+		  }, 12000, function() {
+			scroll();
+		  });
+		}
+
+		scroll();
+	</script>
+
+</head>
+
+<body>
+
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Car Economy</a>
+              
+				
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+	
+	
+	
+	<div class="container-fluid">
+	  <div class="row-fluid">
+			<div class="col-lg-9 firstDiv"> 
+		  <!--Sidebar content-->
+		  
+		<!--  <div id="graph" style="width: 300px; height: 200px; margin: 0 auto">
+		  </div>  -->
+		 
+			<div class="col-md-12 outerdiv">
+				<div class="slideshow" style="max-width:900px">
+				  <img class="mySlides" src="pig.jpg" style="width:100%">
+				  <img class="mySlides" src="bmwnew.jpg" style="width:100%">
+				  <img class="mySlides" src="dubaipolice.jpg" style="width:100%">
+				</div>
+				<script>
+					var myIndex = 0;
+					carousel();
+
+					function carousel() {
+						var i;
+						var x = document.getElementsByClassName("mySlides");
+						for (i = 0; i < x.length; i++) {
+						   x[i].style.display = "none";  
+						}
+						myIndex++;
+						if (myIndex > x.length) {myIndex = 1}    
+						x[myIndex-1].style.display = "block";  
+						setTimeout(carousel, 2000); // Change image every 2 seconds
+					}
+				</script>
+				
+			</div>	
+		  
+			<div class="col-md-6 small1Div">
+			 
+		
+		  
+			
+
+		</div>
+		
+		<div class="col-md-6 rightdiv">
+			<div class="col-md-6 ">
+				<div   id="graph">
+				</div>
+
+			</div>
+		
+		</div>
+	
+		<div class="col-md-12 secondDiv" >
+		  <!--Body content-->
+		 <div id="secondDiv" style="postion:relative; overflow:hidden; width:100%;background-color: black;">	 
+		<span id="scrolltext" style="position:absolute; background-color: black; color:white">Developed by Eoin, Tomas, Ebin, and Ryan.   Copyright protected. &copy 2016</span>
+		  </div>
+		      <script>
+				function scroll() {
+				  $('#scrolltext').css('left', $('#secondDiv').width());
+				  $('#scrolltext').animate({
+					left: '-='+($('#secondDiv').width()+$('#scrolltext').width())
+				  }, 12000, function() {
+					scroll();
+				  });
+				}
+
+			scroll();
+	</script>
+	  
+		
+	
+		  
+	  
+		</div>
+	  </div>
+	</div>
+
+    <!-- /.container -->
+
+    <!-- jQuery Version 1.11.1 -->
+   
+</body>
+
+</html>

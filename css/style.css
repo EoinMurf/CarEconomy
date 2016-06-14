@@ -9,43 +9,63 @@
 .firstDiv{
 	position:relative;
 	height:100%;
-	background-color:pink;
+	background-color:white;
+	padding-bottom: 5px;
+	
 }
 
 .secondDiv{
-	
-	height:700px;
-	float:right;
-	width:20%;
-	background-color:blue;
+	position:relative;
+	height:100%;
+	background-color:black;
+	color:white;
 }
 
 .small1Div{
-	width:40%;
-	height:40%;
-	background-color:orange;
+	height:350px;
+	background-color:white;
+	background-image: url("../bubble.jpg");
 	
 }
 
 .small2Div{
-	width:40%;
-	height:40%;
+	height:350px;
 	background-color:blue;
 	
 }
 
 .outerdiv{
-	height:20%;
-	width:20%;
+	height:40%;
+	width:100%;
+	background-color:white;
+	padding-bottom: 20px;
+}
+
+#graph{
+	height:350px;
+	width:446px;
 	background-color:white;
 }
 
 
+.btn {
+	background-color:#4d4dff;
+}
 
 
-#left{
-    float: left;
+
+#make{
+    
     margin:2% 2% 2%;
+	padding-top: 70px ;
+	padding-left: 140px ;
+	
+	
+	
+}
+
+#leftchild{
+		padding-left: 140px ;
 }
 #right{
    float: right;
@@ -55,6 +75,10 @@
 	float: left;
 	margin:2% 10% 2%;
 }
+
+
+
+.mySlides {display:none;}
 
 
 

@@ -1,0 +1,32 @@
+
+
+
+
+
+<!-- javascript for scroll -->
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+
+
+</head>
+<body>
+
+<div id="scrollcontainer" style="postion:relative; overflow:hidden; width:100%;">
+  <span id="scrolltext" style="position:absolute; whitespace:nowrap">this is my ebins the scrolling text</span>
+</div>
+    <script>
+function scroll() {
+  $('#scrolltext').css('left', $('#scrollcontainer').width());
+  $('#scrolltext').animate({
+    left: '-='+($('#scrollcontainer').width()+$('#scrolltext').width())
+  }, 12000, function() {
+    scroll();
+  });
+}
+
+scroll();
+</script>
+
+</body>
+</html>
