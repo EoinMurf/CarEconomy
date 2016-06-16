@@ -41,45 +41,76 @@ ${demo.css}
 <script>
 var makeType;
 var transmissionType;
-
+	
+	function getMakes(){
+		alert("This is the get Makes function");
+		/*
+			we need to submit an ajax query to php to get all the available makes of cars...
+			then we need to assign this information to the appropriate element on the html page...
+			then we need to make sure we can see it...	
+			
+			 <button type="button" class="btn btn-danger">Select Make</button>
+					  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span class="caret"></span>
+						<span class="sr-only">Toggle Dropdown</span>
+					  </button>
+					<ul class="dropdown-menu">
+						
+						<li><a onclick="processMake('BMW');">BMW</a></li>
+						
+						<li><a href="#">Another action</a></li>
+						
+						<li><a href="#">Something else here</a></li>
+						
+						<li><a href="#">Separated link</a></li>
+					</ul>
+		*/		
+		var innerMakeDiv = "<button type=\"button\" class=\"btn btn-danger\">Select Make</button><button type=\"button\" class=\"btn btn-danger dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button><ul class=\"dropdown-menu\">";
+		
+		$.ajax({
+			url: 'dropdown.php',
+			type: 'post',
+			data: {},
+			async: false,
+			success: function(data){
+				alert("The data being returned from the server is : "+data);
+				var makes = JSON.parse(data);
+				alert("The number of makes found is : "+makes.length);	
+				for(var i=0;i < makes.length;i++){
+					innerMakeDiv = innerMakeDiv+"<li><a onclick=\"processMake('"+makes[i]+"');\">"+makes[i]+"</a></li>";
+				}			
+				innerMakeDiv = innerMakeDiv+"</ul>";
+				document.getElementById("make").innerHTML = innerMakeDiv;			
+			},
+			cache: false
+		});
+		
+	}
+	
+	
 	function processMake(elem){
 		alert("The make that was selected is : "+elem);
 		makeType = document.getElementById("make").value;		
 		document.getElementById("make").style.display = "none";
-		document.getElementById("transmission").style.display = "inline";
+		document.getElementById("tramsmission").style.display = "inline";
 	}
 	
 	
-	function processTransmission(type){
+	function processTransmission(type){	
+		alert("start");
+		$.ajax({
+		url: 'dropdown.php',
+		type: 'post',
+		data: {name: name, password: password},
+				async: false,
+		success: function(data){
+				  alert("The data being returned from the server is : "+data);
+		},
+			cache: false
+		});
+
+	}// end of ProcessTransmission
 		
-		/*
-			We are going to use the global variable for make and the local variable for transmissionType
-			and send an ajax request to get the available models from the database.
-			
-			with the results we need to build the options for the the next button. So for example if we
-			have an array of elements called models being returned from the server we can build the list like this:
-			
-			we are going to create the following structure for HTML and then insert it into the appropriate div below...
-			
-			Ajax Call ...
-			
-			
-			
-			
-			
-			var content = "<button type=\"button\" class=\"btn btn-danger\">Model</button><button type=\"button\" class=\"btn btn-danger dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button><ul class=\"dropdown-menu\">";
-			
-			for(var i=0;i < models.length;i++){
-				content = content + "<li><a onclick="processModel(\'"+models[i]+"\');">"+models[i]+"</a></li>";
-			}
-			content = content + "</ul>";
-			document.getElementById("model").innerHTML = content;
-			document.getElementById("model").style.display = "inline";
-			document.getElementById("transmission").style.display = "none";
-			
-		*/
-		
-	}
 </script>
 
 </head>
@@ -152,19 +183,8 @@ var transmissionType;
 			 
 			<div class="container leftmain">
 				<h2> Please enter the Car details				</h2>
-				<div id="make" class="btn-group text-center" >
-					  <button type="button" class="btn btn-danger">Select Make</button>
-					  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<span class="caret"></span>
-						<span class="sr-only">Toggle Dropdown</span>
-					  </button>
-					<ul class="dropdown-menu">
-						<li><a onclick="processMake('BMW');">BMW</a></li>
-						<li><a href="#">Another action</a></li>
-						<li><a href="#">Something else here</a></li>
-						<li><a href="#">Separated link</a></li>
-					</ul>
-				</div>
+				
+				<div id="make" class="btn-group text-center" >	</div>
 			
 			<div class="btn-group text-center" id="transmission" style="display:none;">
 					  <button type="button" class="btn btn-danger">Transmission</button>
@@ -182,8 +202,8 @@ var transmissionType;
 			</div>
 			
 			
+			
 			</div>
-		  
 			
 
 		</div>
@@ -232,11 +252,12 @@ var transmissionType;
 	
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+   <script src="js/bootstrap.min.js"></script>
 
 	
 	
 	<script type="text/javascript">
+	
 		$(function () {
 			$('#graph').highcharts({
 				title: {
@@ -290,6 +311,9 @@ var transmissionType;
 					data: [3215, 2366, 2316, 1264, 1032, 241, 3064, 812, 602, 311, 100, 46]
 				}]
 			});
+			
+			getMakes();
+			
 		});
 		</script>
 </body>
