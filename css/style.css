@@ -51,7 +51,15 @@
 .btn {
 	background-color:#4d4dff;
 }
-
+.dropdown-menu{
+	overflow:auto;
+	width: 90px;
+    height: 160px;
+	
+}
+.sr-only{
+	padding-left: 140px ;
+}
 
 
 #make{
@@ -59,7 +67,6 @@
     margin:2% 2% 2%;
 	padding-top: 70px ;
 	padding-left: 140px ;
-	
 	
 	
 }
@@ -73,7 +80,9 @@
 	
 	
 }
-
+#leftmain{
+	background-color:blue;
+}
 #leftchild{
 		padding-left: 140px ;
 }

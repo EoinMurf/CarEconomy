@@ -41,9 +41,14 @@ ${demo.css}
 <script>
 var makeType;
 var transmissionType;
+var makechosen;
+var typechosen;
+var outputtwo;
+var yearchosen;
+var outputthree;
 	
 	function getMakes(){
-		alert("This is the get Makes function");
+		
 		/*
 			we need to submit an ajax query to php to get all the available makes of cars...
 			then we need to assign this information to the appropriate element on the html page...
@@ -73,9 +78,9 @@ var transmissionType;
 			data: {},
 			async: false,
 			success: function(data){
-				alert("The data being returned from the server is : "+data);
+				
 				var makes = JSON.parse(data);
-				alert("The number of makes found is : "+makes.length);	
+				
 				for(var i=0;i < makes.length;i++){
 					innerMakeDiv = innerMakeDiv+"<li><a onclick=\"processMake('"+makes[i]+"');\">"+makes[i]+"</a></li>";
 				}			
@@ -92,24 +97,69 @@ var transmissionType;
 		alert("The make that was selected is : "+elem);
 		makeType = document.getElementById("make").value;		
 		document.getElementById("make").style.display = "none";
-		document.getElementById("tramsmission").style.display = "inline";
+		document.getElementById("transmission").style.display = "inline";
+		makechosen = elem;
 	}
 	
 	
 	function processTransmission(type){	
-		alert("start");
-		$.ajax({
-		url: 'dropdown.php',
-		type: 'post',
-		data: {name: name, password: password},
-				async: false,
-		success: function(data){
-				  alert("The data being returned from the server is : "+data);
-		},
-			cache: false
-		});
+		typechosen = type;
+		
+		alert("The make that was selected is : "+type);
+		document.getElementById("transmission").style.display = "none";
+		outputtwo = "The Make is: <b>"+makechosen;
+		outputtwo = outputtwo+ "</b><br/> The Type is: <b>"+typechosen;
+		outputtwo = outputtwo+ "</b>"
+		document.getElementById("displayone").innerHTML = outputtwo;
+		document.getElementById("year").style.display = "inline";	
 
 	}// end of ProcessTransmission
+	
+		function processyear(year){
+		alert("The year that was selected is : "+year);
+		document.getElementById("year").style.display = "none";
+		yearchosen = year;
+		
+		document.getElementById("displayone").style.display = "none";
+		
+		outputthree = outputtwo+ "<br/> The Year is: <b>"+yearchosen;
+		outputthree = outputthree+ "</b>"
+		document.getElementById("displaytwo").innerHTML = outputthree;
+		getmodel();
+	}
+	
+		function processmodel(model){
+		alert("The Model that was selected is : "+model);
+			}
+		
+		function getmodel(){
+		var innerModelDiv = "<button type=\"button\" class=\"btn btn-danger\">Select Model</button><button type=\"button\" class=\"btn btn-danger dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button><ul class=\"dropdown-menu\">";
+		
+		$.ajax({
+			url: 'modeldropdown.php',
+			type: 'post',
+			data: {},
+			async: false,
+			success: function(data){
+				
+				var models = JSON.parse(data);
+				
+				for(var i=0;i < models.length;i++){
+					innerModelDiv = innerModelDiv+"<li><a onclick=\"processmodel('"+models[i]+"');\">"+models[i]+"</a></li>";
+				}			
+				innerModelDiv = innerModelDiv+"</ul>";
+				document.getElementById("model").innerHTML = innerModelDiv;			
+			},
+			cache: false
+		});
+		
+	}
+	
+	
+	
+	
+	
+	
 		
 </script>
 
@@ -184,7 +234,11 @@ var transmissionType;
 			<div class="container leftmain">
 				<h2> Please enter the Car details				</h2>
 				
-				<div id="make" class="btn-group text-center" >	</div>
+				<div id="displaythree" > </div>
+				<div id="displaytwo" > </div>
+				<div id="model" class="btn-group text-center" >	 </div>
+				<div id="displayone" > </div>
+				<div id="make" class="btn-group text-center" >	 </div>
 			
 			<div class="btn-group text-center" id="transmission" style="display:none;">
 					  <button type="button" class="btn btn-danger">Transmission</button>
@@ -193,13 +247,35 @@ var transmissionType;
 						<span class="sr-only">Toggle Dropdown</span>
 					  </button>
 					<ul class="dropdown-menu">
-						<li><a href="#">Manual</a></li>
-						<li><a href="#">Automatic</a></li>						
+						<li><a onclick="processTransmission('Manual')">Manual</a></li>
+						<li><a onclick="processTransmission('Automatic')">Automatic</a></li>						
+					</ul>
+			</div>
+			<div class="btn-group text-center" id="year" style="display:none;">
+					  <button type="button" class="btn btn-danger">Year</button>
+					  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span class="caret"></span>
+						<span class="sr-only">Toggle Dropdown</span>
+					  </button>
+					<ul class="dropdown-menu">
+						<li><a onclick="processyear(2000)">2000</a></li>
+						<li><a onclick="processyear(2001)">2001</a></li>
+						<li><a onclick="processyear(2002)">2002</a></li>
+						<li><a onclick="processyear(2003)">2003</a></li>
+						<li><a onclick="processyear(2004)">2004</a></li>
+						<li><a onclick="processyear(2005)">2005</a></li>
+						<li><a onclick="processyear(2006)">2006</a></li>
+						<li><a onclick="processyear(2007)">2007</a></li>
+						<li><a onclick="processyear(2008)">2008</a></li>
+						<li><a onclick="processyear(2009)">2009</a></li>
+						<li><a onclick="processyear(2010)">2010</a></li>
+						<li><a onclick="processyear(2011)">2011</a></li>
+						<li><a onclick="processyear(2012)">2012</a></li>
+						<li><a onclick="processyear(2013)">2013</a></li>	
 					</ul>
 			</div>
 			
-			<div class="btn-group" id="model" style="display:none;">				  
-			</div>
+		
 			
 			
 			
