@@ -46,6 +46,11 @@ var typechosen;
 var outputtwo;
 var yearchosen;
 var outputthree;
+var modelchosen;
+var outputfour;
+var kmschosen;
+var outputfive;
+
 	
 	function getMakes(){
 		
@@ -94,7 +99,7 @@ var outputthree;
 	
 	
 	function processMake(elem){
-		alert("The make that was selected is : "+elem);
+		//alert("The make that was selected is : "+elem);
 		makeType = document.getElementById("make").value;		
 		document.getElementById("make").style.display = "none";
 		document.getElementById("transmission").style.display = "inline";
@@ -105,7 +110,7 @@ var outputthree;
 	function processTransmission(type){	
 		typechosen = type;
 		
-		alert("The make that was selected is : "+type);
+		//alert("The make that was selected is : "+type);
 		document.getElementById("transmission").style.display = "none";
 		outputtwo = "The Make is: <b>"+makechosen;
 		outputtwo = outputtwo+ "</b><br/> The Type is: <b>"+typechosen;
@@ -116,10 +121,10 @@ var outputthree;
 	}// end of ProcessTransmission
 	
 		function processyear(year){
-		alert("The year that was selected is : "+year);
+		//alert("The year that was selected is : "+year);
 		document.getElementById("year").style.display = "none";
 		yearchosen = year;
-		
+				
 		document.getElementById("displayone").style.display = "none";
 		
 		outputthree = outputtwo+ "<br/> The Year is: <b>"+yearchosen;
@@ -128,24 +133,32 @@ var outputthree;
 		getmodel();
 	}
 	
+		
 		function processmodel(model){
-		alert("The Model that was selected is : "+model);
+		//alert("The Model that was selected is : "+model);
+			modelchosen = model;
+			document.getElementById("model").style.display = "none";
+			document.getElementById("displaytwo").style.display = "none";
+			outputfour = outputthree+ "<br/> The Model is: <b>"+modelchosen;
+			outputfour = outputfour+ "</b>"
+			document.getElementById("displaythree").innerHTML = outputfour;
+			document.getElementById("avgkms").style.display = "inline";	
 			}
 		
 		function getmodel(){
 		var innerModelDiv = "<button type=\"button\" class=\"btn btn-danger\">Select Model</button><button type=\"button\" class=\"btn btn-danger dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button><ul class=\"dropdown-menu\">";
 		
 		$.ajax({
-			url: 'modeldropdown.php',
+			url: 'testdropdown.php',
 			type: 'post',
-			data: {},
+			data: ({ make: makechosen, year: yearchosen}),
 			async: false,
 			success: function(data){
 				
-				var models = JSON.parse(data);
+				var modelss = JSON.parse(data);
 				
-				for(var i=0;i < models.length;i++){
-					innerModelDiv = innerModelDiv+"<li><a onclick=\"processmodel('"+models[i]+"');\">"+models[i]+"</a></li>";
+				for(var i=0;i < modelss.length;i++){
+					innerModelDiv = innerModelDiv+"<li><a onclick=\"processmodel('"+modelss[i]+"');\">"+modelss[i]+"</a></li>";
 				}			
 				innerModelDiv = innerModelDiv+"</ul>";
 				document.getElementById("model").innerHTML = innerModelDiv;			
@@ -155,9 +168,28 @@ var outputthree;
 		
 	}
 	
+	function processkms(kms){
+		//alert("The Model that was selected is : "+kms);
+		kmschosen = kms;
+		document.getElementById("avgkms").style.display = "none";
+		document.getElementById("displaythree").style.display = "none";
+			outputfive = outputfour+ "<br/> The Average kms/year: <b>"+kmschosen;
+			outputfive = outputfive+ " kms </b>"
+			document.getElementById("displayfour").innerHTML = outputfive;
+			document.getElementById("calculate").style.display = "inline";	
+		
+		}
 	
+	function calculate(){
 	
-	
+			alert("Processing... Please wait!");
+		document.getElementById("calculate").style.display = "none";
+		document.getElementById("displayfour").style.display = "none";
+		
+		document.getElementById("result").style.display = "inline";	
+		
+			
+	}
 	
 	
 		
@@ -233,11 +265,14 @@ var outputthree;
 			 
 			<div class="container leftmain">
 				<h2> Please enter the Car details				</h2>
-				
+				<div id="displayfive" > </div>
+				<div id="displayfour" > </div>
 				<div id="displaythree" > </div>
+				
 				<div id="displaytwo" > </div>
-				<div id="model" class="btn-group text-center" >	 </div>
+				
 				<div id="displayone" > </div>
+				<div id="model" class="btn-group text-center">	 </div>
 				<div id="make" class="btn-group text-center" >	 </div>
 			
 			<div class="btn-group text-center" id="transmission" style="display:none;">
@@ -274,6 +309,37 @@ var outputthree;
 						<li><a onclick="processyear(2013)">2013</a></li>	
 					</ul>
 			</div>
+						<div class="btn-group text-center" id="avgkms" style="display:none;">
+					  <button type="button" class="btn btn-danger">Avg kms per year</button>
+					  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span class="caret"></span>
+						<span class="sr-only">Toggle Dropdown</span>
+					  </button>
+					<ul class="dropdown-menu">
+						<li><a onclick="processkms(1000)">1000></a></li>
+						<li><a onclick="processkms(2000)">2000></a></li>
+						<li><a onclick="processkms(3000)">3000></a></li>
+						<li><a onclick="processkms(4000)">4000></a></li>
+						<li><a onclick="processkms(5000)">5000></a></li>
+						<li><a onclick="processkms(6000)">6000></a></li>
+						<li><a onclick="processkms(8000)">8000></a></li>
+						<li><a onclick="processkms(10000)">10000></a></li>
+						<li><a onclick="processkms(15000)">15000></a></li>
+						<li><a onclick="processyear(25000)">25000></a></li>
+						<li><a onclick="processyear(40000)">40000></a></li>
+						<li><a onclick="processyear(60000)">60000></a></li>
+							
+					</ul>
+			</div>
+			<div class="btn-group text-center" id="calculate" style="display:none;">
+					  <button type="button" class="btn btn-danger" onclick="calculate()">Calculate Estimated Cost</button>
+					 </div>
+			<div id = "result" style="display:none;" >
+			<div class="btn-group text-center" >
+						<img src="oops_sign.jpg" ></img></br>
+					  <button type="button" class="btn btn-danger" onclick="">Site is down for maintenance!! See you later!!</button>
+					 </div>
+					 </div>
 			
 		
 			

@@ -1,0 +1,117 @@
+
+
+
+
+select a.modelName
+from model a
+inner join make b on  a.modelid = b.idmake
+inner join year c on c.idyear = b.idyear
+where b.makename = $make && c.year = $year;
+
+
+
+
+
+
+
+
+({name: 145}),
+
+
+
+
+
+
+ a.modelid = b.idmake and c.idyear = b.idyear;
+
+
+inner join bridge b on s.id = b.sid
+inner join course c on b.cid  = c.id 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var makeType;
+var transmissionType;
+	
+	function getMakes(){
+		alert("This is the get Makes function");
+		/*
+			we need to submit an ajax query to php to get all the available makes of cars...
+			then we need to assign this information to the appropriate element on the html page...
+			then we need to make sure we can see it...	
+			
+			 <button type="button" class="btn btn-danger">Select Make</button>
+					  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span class="caret"></span>
+						<span class="sr-only">Toggle Dropdown</span>
+					  </button>
+					<ul class="dropdown-menu">
+						
+						<li><a onclick="processMake('BMW');">BMW</a></li>
+						
+						<li><a href="#">Another action</a></li>
+						
+						<li><a href="#">Something else here</a></li>
+						
+						<li><a href="#">Separated link</a></li>
+					</ul>
+		*/		
+		var innerMakeDiv = "<button type=\"button\" class=\"btn btn-danger\">Select Make</button><button type=\"button\" class=\"btn btn-danger dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button><ul class=\"dropdown-menu\">";
+		
+		$.ajax({
+			url: 'dropdown.php',
+			type: 'post',
+			data: {},
+			async: false,
+			success: function(data){
+				alert("The data being returned from the server is : "+data);
+				var makes = JSON.parse(data);
+				alert("The number of makes found is : "+makes.length);	
+				for(var i=0;i < makes.length;i++){
+					innerMakeDiv = innerMakeDiv+"<li><a onclick=\"processMake('"+makes[i]+"');\">"+makes[i]+"</a></li>";
+				}			
+				innerMakeDiv = innerMakeDiv+"</ul>";
+				document.getElementById("make").innerHTML = innerMakeDiv;			
+			},
+			cache: false
+		});
+		
+	}
+	
+	
+	function processMake(elem){
+		alert("The make that was selected is : "+elem);
+		makeType = document.getElementById("make").value;		
+		document.getElementById("make").style.display = "none";
+		document.getElementById("tramsmission").style.display = "inline";
+	}
+	
+	
+	function processTransmission(type){	
+		alert("start");
+		$.ajax({
+		url: 'dropdown.php',
+		type: 'post',
+		data: {name: name, password: password},
+				async: false,
+		success: function(data){
+				  alert("The data being returned from the server is : "+data);
+		},
+			cache: false
+		});
+
+	}// end of ProcessTra
