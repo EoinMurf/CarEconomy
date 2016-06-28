@@ -399,65 +399,143 @@ var outputfive;
 	
 	
 	<script type="text/javascript">
-	
 		$(function () {
-			$('#graph').highcharts({
-				title: {
-					text: 'Monthly Sales in 2015',
-					x: -20 //center
-				},
-				subtitle: {
-					text: 'Source:beepbeep.ie',
-					x: -20
-				},
-				xAxis: {
-					categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-						'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-				},
-				yAxis: {
-					title: {
-						text: 'Sales'
-					},
-					plotLines: [{
-						value: 0,
-						width: 1,
-						color: '#808080'
-					}]
-				},
-				tooltip: {
-					valueSuffix: ''
-				},
-				credits: {
-					enabled: false
-				},
-				legend: {
-					layout: 'vertical',
-					align: 'right',
-					verticalAlign: 'middle',
-					borderWidth: 0
-				},
-				series: [{
-					name: 'Hyundai',
-					data: [2931,1265, 1923, 852, 522, 66, 3149, 300 , 287, 125, 22,42]
-				}, {
-					name: 'Toyota',
-					data: [3858, 1245, 2025, 782, 695, 261, 2858, 685, 369, 156, 43, 132]
-				}, {
-					name: 'Ford',
-					data: [3122, 1470, 2027, 652, 532, 159, 2744, 516, 554, 142, 114, 18]
-				}, {
-					name: 'Renault',
-					data: [1763, 919, 757, 317, 319, 24, 1558, 248, 94, 58, 30, 3]
-				}, {
-					name: 'Volkswagen',
-					data: [3215, 2366, 2316, 1264, 1032, 241, 3064, 812, 602, 311, 100, 46]
-				}]
+		var twitterScore = 15;
+		var tmp = 4;
+			$(document).ready(function () {
+				Highcharts.setOptions({
+					global: {
+						useUTC: false
+					}
+				});
+
+        $('#graph').highcharts({
+            chart: {
+                type: 'spline',
+                animation: Highcharts.svg, // don't animate in old IE
+                marginRight: 10,
+                events: {
+                    load: function () {
+
+                        // set up the updating of the chart each second
+                        var series = this.series[0];
+						var series2 = this.series[1];
+                        setInterval(function () {
+						 $.ajax({
+							url: 'testingTwitter.php',
+							type: 'post',
+							data: {},
+							async: false,
+							success: function(data){
+								//twitterScore = data;
+								var array = data.split(":");
+								
+								twitterScore = parseInt(array[0]);
+								tmp = parseInt(array[1]);
+								
+							},
+							cache: false
+						});
+
+                            var x = (new Date()).getTime(), // current time
+                            y = twitterScore;
+                            series.addPoint([x, y], true, true);
+							series2.addPoint([x, tmp], true, true);
+                        }, 3000);
+                    }
+                }
+            },
+            title: {
+                text: 'Live random data'
+            },
+            xAxis: {
+                type: 'datetime',
+                tickPixelInterval: 150
+            },
+            yAxis: {
+                title: {
+                    text: 'Value'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + '</b><br/>' +
+                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                        Highcharts.numberFormat(this.y, 2);
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            series: [{
+                name: 'Negative Sentiment',
+				color: 'red',				
+                data: (function () {
+                    // generate an array of random data
+                    var data = [],
+                        time = (new Date()).getTime(),
+                        i;
+
+                    for (i = -19; i <= 0; i += 1) {
+                        data.push({
+                            x: time + i * 1000,
+                            y: Math.random()
+                        });
+                    }
+                    return data;
+                }())
+            },
+			
+			{
+				name: 'Positive Sentiment',				
+				color: 'green',
+				data: (function () {
+                    // generate an array of random data
+						var data = [],
+                        time = (new Date()).getTime(),
+                        i;
+
+                    for (i = -19; i <= 0; i += 1) {
+                        data.push({
+                            x: time + i * 1000,
+                            y: Math.random()
+                        });
+                    }
+                    return data;
+                }())								
+			},
+			
+			{
+					name: 'Unknown',				
+					color: 'blue',
+					data: (function () {
+						// generate an array of random data
+							var data = [],
+							time = (new Date()).getTime(),
+							i;
+
+						for (i = -19; i <= 0; i += 1) {
+							data.push({
+								x: time + i * 1000,
+								y: Math.random()
+							});
+						}
+						return data;
+					}())								
+				}
+				]
 			});
-			
-			getMakes();
-			
 		});
-		</script>
+	});
+	</script>
 </body>
 
 </html>
