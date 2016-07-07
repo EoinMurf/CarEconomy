@@ -50,6 +50,9 @@ var modelchosen;
 var outputfour;
 var kmschosen;
 var outputfive;
+var enginesize;
+var taxdisplay;
+var idmodel
 
 	
 	function getMakes(){
@@ -98,6 +101,8 @@ var outputfive;
 	}
 	
 	
+
+	
 	function processMake(elem){
 		//alert("The make that was selected is : "+elem);
 		makeType = document.getElementById("make").value;		
@@ -134,12 +139,13 @@ var outputfive;
 	}
 	
 		
-		function processmodel(model){
+		function processmodel(id){
 		//alert("The Model that was selected is : "+model);
+			idmodel = id;
 			modelchosen = model;
 			document.getElementById("model").style.display = "none";
 			document.getElementById("displaytwo").style.display = "none";
-			outputfour = outputthree+ "<br/> The Model is: <b>"+modelchosen;
+			outputfour = outputthree+ "<br/> The Model ID is: <b>"+idmodel;
 			outputfour = outputfour+ "</b>"
 			document.getElementById("displaythree").innerHTML = outputfour;
 			document.getElementById("avgkms").style.display = "inline";	
@@ -151,17 +157,22 @@ var outputfive;
 		$.ajax({
 			url: 'testdropdown.php',
 			type: 'post',
-			data: ({ make: makechosen, year: yearchosen}),
+			data: ({ make: makechosen, year: yearchosen, type: typechosen}),
 			async: false,
+			 
+
 			success: function(data){
 				
-				var modelss = JSON.parse(data);
 				
-				for(var i=0;i < modelss.length;i++){
-					innerModelDiv = innerModelDiv+"<li><a onclick=\"processmodel('"+modelss[i]+"');\">"+modelss[i]+"</a></li>";
-				}			
-				innerModelDiv = innerModelDiv+"</ul>";
-				document.getElementById("model").innerHTML = innerModelDiv;			
+					var modelss = JSON.parse(data);
+									
+					for(var i=0;i < modelss.length;i++){
+						innerModelDiv = innerModelDiv+"<li><a onclick=\"processmodel('"+modelss[i][0]+"');\">"+modelss[i][1]+"</a></li>";
+						}	
+						
+					innerModelDiv = innerModelDiv+"</ul>";
+					document.getElementById("model").innerHTML = innerModelDiv;	
+										
 			},
 			cache: false
 		});
@@ -180,16 +191,160 @@ var outputfive;
 		
 		}
 	
-	function calculate(){
 	
-			alert("Processing... Please wait!");
+
+	
+	
+	
+	
+	function calculate(idmodel){
+		
+		$.ajax({
+			url: 'engsize.php',
+			type: 'post',
+			data: ({ idmod: idmodel}),
+			async: false,
+			success: function(data){
+				
+				var modelss = JSON.parse(data);
+				enginesize = modelss[0];
+							
+				alert("The enginesize is : "+enginesize);			
+						
+			},
+			cache: false
+		});
+			
+	
+	
+	
+	
+	
+			
 		document.getElementById("calculate").style.display = "none";
 		document.getElementById("displayfour").style.display = "none";
 		
 		document.getElementById("result").style.display = "inline";	
+		if(yearchosen < 2008){
+			if (enginesize <1001){
+				taxdisplay = 199;
+				}
+				else if (enginesize <1101){
+				taxdisplay = 299;
+				}
+				else if (enginesize <1201){
+				taxdisplay = 330;
+				}
+				else if (enginesize <1301){
+				taxdisplay = 358;
+				}
+				else if (enginesize <1401){
+				taxdisplay = 385;
+				}
+				else if (enginesize <1501){
+				taxdisplay = 413;
+				}
+				else if (enginesize <1601){
+				taxdisplay = 514;
+				}
+				else if (enginesize <1701){
+				taxdisplay = 544;
+				}
+				else if (enginesize <1801){
+				taxdisplay = 636;
+				}
+				else if (enginesize <1901){
+				taxdisplay = 673;
+				}
+				else if (enginesize <2001){
+				taxdisplay = 710;
+				}
+				else if (enginesize <2101){
+				taxdisplay = 906;
+				}
+				else if (enginesize <2201){
+				taxdisplay = 951;
+				}
+				else if (enginesize <2301){
+				taxdisplay = 994;
+				}
+				else if (enginesize <2401){
+				taxdisplay = 1034;
+				}
+				else if (enginesize <2501){
+				taxdisplay = 1080;
+				}
+				else if (enginesize <2601){
+				taxdisplay = 1294;
+				}
+				else if (enginesize <2701){
+				taxdisplay = 1345;
+				}
+				else if (enginesize <2801){
+				taxdisplay = 1391;
+				}
+				else if (enginesize <2901){
+				taxdisplay = 1443;
+				}
+				else if (enginesize <3001){
+				taxdisplay = 1494;
+				}
+				else if (enginesize >3000 && enginesize <15000){
+				taxdisplay = 1809;
+				}
+				else{
+				alert("Engine Size out of tax band");
+				}
+			
+			
+			
+		alert("The tax is: "+taxdisplay); 
+		
+		
+		
+		}
+		else{
+		alert("Year greater than 2008");
+		}
+		
+		
 		
 			
 	}
+	
+		function processfuelcost(){
+			document.getElementById("result").style.display = "none";
+			var fueleff;
+			$.ajax({
+			url: 'fuelefficiency.php',
+			type: 'post',
+			data: ({ idmod: idmodel}),
+			async: false,
+			success: function(data){
+				
+				var modelss = JSON.parse(data);
+				fueleff = modelss[0];
+							
+				alert("The fuelefficiency is : "+fueleff);			
+						
+			},
+			cache: false
+			});
+			
+			
+			
+			var buttondisplay;
+			var fuelcost;
+			var totalcost;
+			 fuelcost = Math.round(kmschosen * fueleff);
+			 alert("The fuel cost is: "+fuelcost+ " Euros");
+			 totalcost = fuelcost + taxdisplay;
+			 //alert("The total cost is: "+totalcost);
+			 buttondisplay = "<button type=\"button\" class=\"btn btn-danger\">The total Cost is : " +totalcost+" Euros </button>";
+			 document.getElementById("finalcost").style.display = "inline";	
+			 document.getElementById("finalcost").innerHTML = buttondisplay;	
+		 
+		}
 	
 	
 		
@@ -332,18 +487,20 @@ var outputfive;
 					</ul>
 			</div>
 			<div class="btn-group text-center" id="calculate" style="display:none;">
-					  <button type="button" class="btn btn-danger" onclick="calculate()">Calculate Estimated Cost</button>
+					  <button type="button" class="btn btn-danger" onclick="calculate(idmodel)">Calculate the Tax Cost</button>
 					 </div>
 			<div id = "result" style="display:none;" >
 			<div class="btn-group text-center" >
-						<img src="oops_sign.jpg" ></img></br>
-					  <button type="button" class="btn btn-danger" onclick="">Site is down for maintenance!! See you later!!</button>
+						<!-- <img src="oops_sign.jpg" ></img></br>  -->
+					  <button type="button" class="btn btn-danger" onclick="processfuelcost()">Click Here for Total Estimated Cost</button>
 					 </div>
 					 </div>
-			
-		
-			
-			
+					 <div id = "finalcost" style="display:none;" >
+					 			
+					  <!--  <button type="button" class="btn btn-danger" onclick=" ">Total Cost: </button> -->
+					 </div>
+					 </div>
+					
 			
 			</div>
 			
@@ -360,8 +517,10 @@ var outputfive;
 		</div>
 	
 		<div class="col-md-12 secondDiv" >
+		  <p style = "text-align: center">Powered by RTE&eacute;  (Ryan, Tomas, Eoin, and Ebin).   Copyright protected. &copy 2016</p>
 		  <!--Body content-->
 		 <div id="secondDiv" style="postion:relative; overflow:hidden; width:100%;background-color: black;">	 
+		<!--
 		<span id="scrolltext" style="position:absolute; background-color: black; color:white">Developed by Eoin, Tomas, Ebin, and Ryan.   Copyright protected. &copy 2016</span>
 		  </div>
 		      <script>
@@ -376,8 +535,9 @@ var outputfive;
 
 			scroll();
 	</script>
+	
 	  
-		
+		-->
 	
 		  
 	  
@@ -399,143 +559,65 @@ var outputfive;
 	
 	
 	<script type="text/javascript">
+	
 		$(function () {
-		var twitterScore = 15;
-		var tmp = 4;
-			$(document).ready(function () {
-				Highcharts.setOptions({
-					global: {
-						useUTC: false
-					}
-				});
-
-        $('#graph').highcharts({
-            chart: {
-                type: 'spline',
-                animation: Highcharts.svg, // don't animate in old IE
-                marginRight: 10,
-                events: {
-                    load: function () {
-
-                        // set up the updating of the chart each second
-                        var series = this.series[0];
-						var series2 = this.series[1];
-                        setInterval(function () {
-						 $.ajax({
-							url: 'testingTwitter.php',
-							type: 'post',
-							data: {},
-							async: false,
-							success: function(data){
-								//twitterScore = data;
-								var array = data.split(":");
-								
-								twitterScore = parseInt(array[0]);
-								tmp = parseInt(array[1]);
-								
-							},
-							cache: false
-						});
-
-                            var x = (new Date()).getTime(), // current time
-                            y = twitterScore;
-                            series.addPoint([x, y], true, true);
-							series2.addPoint([x, tmp], true, true);
-                        }, 3000);
-                    }
-                }
-            },
-            title: {
-                text: 'Live random data'
-            },
-            xAxis: {
-                type: 'datetime',
-                tickPixelInterval: 150
-            },
-            yAxis: {
-                title: {
-                    text: 'Value'
-                },
-                plotLines: [{
-                    value: 0,
-                    width: 1,
-                    color: '#808080'
-                }]
-            },
-            tooltip: {
-                formatter: function () {
-                    return '<b>' + this.series.name + '</b><br/>' +
-                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
-                        Highcharts.numberFormat(this.y, 2);
-                }
-            },
-            legend: {
-                enabled: false
-            },
-            exporting: {
-                enabled: false
-            },
-            series: [{
-                name: 'Negative Sentiment',
-				color: 'red',				
-                data: (function () {
-                    // generate an array of random data
-                    var data = [],
-                        time = (new Date()).getTime(),
-                        i;
-
-                    for (i = -19; i <= 0; i += 1) {
-                        data.push({
-                            x: time + i * 1000,
-                            y: Math.random()
-                        });
-                    }
-                    return data;
-                }())
-            },
-			
-			{
-				name: 'Positive Sentiment',				
-				color: 'green',
-				data: (function () {
-                    // generate an array of random data
-						var data = [],
-                        time = (new Date()).getTime(),
-                        i;
-
-                    for (i = -19; i <= 0; i += 1) {
-                        data.push({
-                            x: time + i * 1000,
-                            y: Math.random()
-                        });
-                    }
-                    return data;
-                }())								
-			},
-			
-			{
-					name: 'Unknown',				
-					color: 'blue',
-					data: (function () {
-						// generate an array of random data
-							var data = [],
-							time = (new Date()).getTime(),
-							i;
-
-						for (i = -19; i <= 0; i += 1) {
-							data.push({
-								x: time + i * 1000,
-								y: Math.random()
-							});
-						}
-						return data;
-					}())								
-				}
-				]
+			$('#graph').highcharts({
+				title: {
+					text: 'Monthly Sales in 2015',
+					x: -20 //center
+				},
+				subtitle: {
+					text: 'Source:beepbeep.ie',
+					x: -20
+				},
+				xAxis: {
+					categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+						'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+				},
+				yAxis: {
+					title: {
+						text: 'Sales'
+					},
+					plotLines: [{
+						value: 0,
+						width: 1,
+						color: '#808080'
+					}]
+				},
+				tooltip: {
+					valueSuffix: ''
+				},
+				credits: {
+					enabled: false
+				},
+				legend: {
+					layout: 'vertical',
+					align: 'right',
+					verticalAlign: 'middle',
+					borderWidth: 0
+				},
+				series: [{
+					name: 'Hyundai',
+					data: [2931,1265, 1923, 852, 522, 66, 3149, 300 , 287, 125, 22,42]
+				}, {
+					name: 'Toyota',
+					data: [3858, 1245, 2025, 782, 695, 261, 2858, 685, 369, 156, 43, 132]
+				}, {
+					name: 'Ford',
+					data: [3122, 1470, 2027, 652, 532, 159, 2744, 516, 554, 142, 114, 18]
+				}, {
+					name: 'Renault',
+					data: [1763, 919, 757, 317, 319, 24, 1558, 248, 94, 58, 30, 3]
+				}, {
+					name: 'Volkswagen',
+					data: [3215, 2366, 2316, 1264, 1032, 241, 3064, 812, 602, 311, 100, 46]
+				}]
 			});
+			
+			getMakes();
+			
 		});
-	});
-	</script>
+		</script>
 </body>
 
 </html>
