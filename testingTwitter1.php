@@ -2,7 +2,6 @@
   require("./autoload.php");
   use Abraham\TwitterOAuth\TwitterOAuth;
 
-  $queryString = $_POST['twitter'];
 /*
     Using POST I would pass in the search query, for example the car required...
     
@@ -35,11 +34,8 @@
     the query string "bmw", in english, 100 tweets...etc. This returns json data.
 */
 
-	//echo "The query is : ".$queryString;
-	
-	$queryString = "#".$queryString;
-	$tweets = $connection->get("search/tweets", array(
-    "q" => '$queryString',
+  $tweets = $connection->get("search/tweets", array(
+    "q" => "#bmw",
     "lang" => "en",
     "count" => "100",
     "include_entities" => "true",
@@ -65,93 +61,22 @@ foreach($tweets->statuses as $tweet)
 {   
   $array = explode(" ", $tweet->text);
       
-    foreach($array as $word){           
-		/*
-			We need to check if the word as in whats stored in the variable $word and not we understand as an actual word.
-			Words can contain the hash symbol or a link we need to find this.
-		*/
-			if(ebinCheck($word)){
-				//		echo "<br />Ebin Found</br>";
-			}
-			else if(checkJoiningWords($word)){
-			//		echo "<br />Tomas Found</br>";								
-			}
-			else{
-				$status = checkStatus($word);
-				if($status == "positive"){
-					$positive++;            
-				}
-				else if($status == "negative"){
-					$negative++;
-				}
-				else{
-					$unknown++;
-					//echo "<br />Unknown: ".$word."</br>";													
-				}	
-			}
+    foreach($array as $word){   
+        $status = checkStatus($word);
+        if($status == "positive"){
+            $positive++;            
+        }
+        else if($status == "negative"){
+            $negative++;
+        }
+        else{
+             $unknown++;
+        }
     }    
 }
+
 echo $positive.":".$negative.":".$unknown;
 
-function ebinCheck($word){	
-		if(preg_match('/[A-Z]|[0-9]/', $word)){
-			return true;
-		}
-		
-		else if(strpos($word, '.') !== FALSE){
-			return true;
-		}
-		else if(strpos($word, '!') !== FALSE){
-			return true;
-		}
-		else if(strpos($word, '#') !== FALSE){
-			return true;
-		}
-		else if(strpos($word, 'RT') !== FALSE){
-			return true;
-		}
-		else if(strpos($word, 'MT') !== FALSE){
-			return true;
-		}
-		else if(strpos($word, '@') !== FALSE){
-			return true;
-		}
-		else if(strpos($word, '&') !== FALSE){
-			return true;
-		}
-		else if(strpos($word, '-') !== FALSE){
-			return true;
-		}
-		else if(strpos($word, '|') !== FALSE){
-			return true;
-		}
-		else if(strpos($word, '/') !== FALSE){
-			return true;
-		}
-		else if(strpos($word, 'https') !== FALSE){
-			return true;
-		}
-		else if(strpos($word, 'http') !== FALSE){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-	
-function checkJoiningWords($word) {
-    $status="";
-    $myfile = fopen("linkingWords.txt", "r") or die("Unable to open file!");
-    while(!feof($myfile)) {
-        $tmp = fgets($myfile);
-        $tmp = substr($tmp,0,(strlen($tmp)-2));        
-        if($word == $tmp){			            
-            return true;      
-        }
-    }
-    fclose($myfile);
-    return false;
-}
 
 function checkStatus($word) {
     $status="";
@@ -173,6 +98,7 @@ function checkStatus($word) {
             return $status;        
         }
     }
+	
     $status = "unknown";
     fclose($myfile);
     fclose($myfile2);
