@@ -1,103 +1,45 @@
-.box{
-	
-	background-color:red;
-	border:3px;
-	
-	
+
+#seconddiv{
+background-image : url("../pig.jpg");
+height: 500px;
+width: 95%;
+
 }
 
-.firstDiv{
-	position:relative;
-	height:100%;
-	background-color:white;
-	padding-bottom: 5px;
+#thirddiv{
 	
-}
-
-.secondDiv{
-	position: relative;
-	height:100%;
-	background-color:black;
-	color:white;
-}
-
-.small1Div{
-	height:350px;
-	background-color:white;
-	background-image: url("../bubble.jpg");
-    
-}
-
-.small2Div{
-	height:350px;
-	background-color:blue;
+	background-image : url("../bgreen.jpg");
+	height: 400px;
+	background-color: green;
+	
 	
 }
 
-.outerdiv{
-	height:40%;
-	width:100%;
-	background-color:white;
+#graphic{
+	height: 400px;
+	background-color: green;
+}
+
+
+.col-lg-9{
+		
+	
+	
+}
+
+
+
+.firstone{
+	padding-top: 100px;
+	padding-left: 58px;
 	padding-bottom: 20px;
-}
-
-#graph{
-	height:350px;
-	width:446px;
-	background-color:white;
+	background-color: green;
 }
 
 
-.btn {
-	background-color:#4d4dff;
-}
 .dropdown-menu{
 	overflow:auto;
-	width: 90px;
+	width: 100px;
     height: 160px;
 	
 }
-.sr-only{
-	padding-left: 140px ;
-}
-
-
-#make{
-    
-    margin:2% 2% 2%;
-	padding-top: 70px ;
-	padding-left: 140px ;
-	
-	
-}
-
-#transmission{
-    
-    margin:2% 2% 2%;
-	padding-top: 70px ;
-	padding-left: 140px ;
-	
-	
-	
-}
-#leftmain{
-	background-color:blue;
-}
-#leftchild{
-		padding-left: 140px ;
-}
-#right{
-   float: right;
-}
-
-#buttonLeft{
-	float: left;
-	margin:2% 10% 2%;
-}
-
-
-
-.mySlides {display:none;}
-
-
-
